@@ -6,6 +6,7 @@ namespace WebApi.Controllers
 {
     using System.Data;
     using System.Data.SqlClient;
+    using System.Runtime.CompilerServices;
     using System.Text.Json;
     using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Mvc;
@@ -67,7 +68,7 @@ namespace WebApi.Controllers
                                 brands.Add(brand);
                             }
 
-                            return this.Ok(brands);
+                            return this.StatusCode(200, brands);
                         }
                     }
                 }
@@ -146,11 +147,18 @@ namespace WebApi.Controllers
                     }
                 }
 
-                return this.Ok(rating);
+                return this.StatusCode(201, rating);
             }
             catch (Exception ex)
             {
-                return this.BadRequest($"Error: {ex.Message}");
+                if (rating.Brand == null)
+                {
+                    return this.StatusCode(406, "You must provide all the data required");
+                }
+                else
+                {
+                    return this.StatusCode(500, $"Internal server error: {ex.Message}");
+                }
             }
         }
     }

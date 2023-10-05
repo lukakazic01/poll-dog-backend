@@ -15,7 +15,7 @@ namespace WebApi.Services
         /// Gets the connection string.
         /// </summary>
         /// <returns>connection.</returns>
-        string GetConnectionString();
+        string? GetConnectionString();
     }
 
     /// <summary>
@@ -41,9 +41,9 @@ namespace WebApi.Services
         /// <returns>
         /// connection.
         /// </returns>
-        public string GetConnectionString()
+        public string? GetConnectionString()
         {
-            return configuration.GetConnectionString("PollDogDatabase");
+            return this.configuration.GetConnectionString("PollDogDatabase");
         }
     }
 }
